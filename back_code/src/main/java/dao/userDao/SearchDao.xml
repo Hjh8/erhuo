@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.userDao.SearchDao">
+    <select id="searchGoods" resultType="entity.Search">
+        select goods.id, image, goods.name, concat(price, "") as genderOrMoney,user.name as dromOrSeller
+        from goods join user
+        on goods.sellerID = user.id
+        where goods.name like #{value} or goods.id like #{value}
+        limit #{page}, 8;
+    </select>
+    <select id="searchUsers" resultType="entity.Search">
+        select user.id, avatar as image, user.name, gender as genderOrMoney,drom as dromOrSeller
+        from user
+        where user.name like #{value} or user.id like #{value}
+        limit #{page}, 8;
+    </select>
+    <select id="goodsTotalNum" resultType="int">
+        select count(id) from goods
+        where name like #{value} or id like #{value};
+    </select>
+    <select id="userTotalNum" resultType="int">
+        select count(id) from user
+        where name like #{value} or id like #{value}
+    </select>
+</mapper>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.adminDao.ConsumeDao_admin">
+    <select id="get30DaySale" resultType="Double">
+        SELECT sum(orders.nums*goods.price) as totalNum
+        FROM orders join goods
+        on orders.goodsId = goods.id
+        WHERE
+        DATE_SUB(CURDATE(), INTERVAL 30 DAY ) &lt;= DATE(STR_TO_DATE(orders.time, '%Y-%m-%d %k:%i:%s'))
+        GROUP BY orders.time;
+    </select>
+</mapper>

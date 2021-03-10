@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!--  声明组件扫描器  -->
+    <context:component-scan base-package="Controller" />
+    <!--  声明拦截器  -->
+    <mvc:interceptors>
+        <mvc:interceptor>
+<!--              进行token验证  -->
+            <mvc:mapping path="/card/**"/>
+            <mvc:mapping path="/order/**"/>
+            <mvc:mapping path="/profile/**"/>
+            <mvc:mapping path="/goods/uploadPic"/>
+            <mvc:mapping path="/goods/release"/>
+            <mvc:mapping path="/comment/**"/>
+<!--              拦截器对象  -->
+            <bean class="Interception.Interceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    <!--  声明注解驱动  -->
+    <mvc:annotation-driven />
+    <!--  处理静态资源  -->
+    <mvc:resources location="/static/" mapping="/static/**" />
+</beans>

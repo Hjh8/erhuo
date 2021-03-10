@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.adminDao.UserDao_admin">
+    <select id="getAllUsers" resultType="entity.User">
+        select * from user;
+    </select>
+    <update id="blockadeUser">
+        update user set sta=0 where id=#{id};
+    </update>
+    <update id="leaseUser">
+        update user set sta=1 where id=#{id};
+    </update>
+</mapper>

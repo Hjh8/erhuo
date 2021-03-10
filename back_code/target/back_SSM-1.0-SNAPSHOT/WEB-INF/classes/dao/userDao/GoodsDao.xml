@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.userDao.GoodsDao">
+
+    <select id="queryTotalNum" resultType="int">
+        select count(id) from goods where sort=#{sort};
+    </select>
+    <select id="queryLatestGoods" resultType="entity.GoodsList">
+        select goods.id, goods.name, image, price, user.name as sellerName, STR_TO_DATE(time, '%Y-%m-%d %k:%i:%s') as time
+        from goods join user
+        on goods.sellerID = user.id
+        order by time desc
+        limit #{page}, 8;
+    </select>
+    <select id="querySortGoods" resultType="entity.GoodsList">
+        select goods.id, goods.name, image, price, user.name as sellerName
+        from goods join user
+        on goods.sellerID = user.id
+        where sort=#{sort}
+        limit #{page}, 8;
+    </select>
+    <insert id="addGoods">
+        insert into
+        goods
+        values(#{id},#{sellerId},#{name},#{remark},#{price},#{sort},#{count},#{image},#{transaction},#{time});
+    </insert>
+    <select id="queryGoodsDetail" resultType="entity.GoodsDetail">
+        select * from goods where id = #{goodsId};
+    </select>
+    <select id="queryUSer" resultType="entity.User">
+        select id, name, phone, drom, gender, avatar
+        from user
+        where id = #{userId};
+    </select>
+</mapper>

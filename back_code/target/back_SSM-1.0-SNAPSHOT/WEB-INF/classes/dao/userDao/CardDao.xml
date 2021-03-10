@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.userDao.CardDao">
+    <insert id="addCard">
+        insert into card(id, goodsId, buyerId, nums, sellerName)
+        value(#{id}, #{goodsId}, #{buyerId}, #{nums}, #{sellerName});
+    </insert>
+    <select id="showCard" resultType="entity.CardList">
+        select card.id as id, goods.id as goodsId, sellerName, name as goodsName, nums, price, image, (nums*price) as totalMoney, sellerId
+        from card join goods
+        on card.goodsId = goods.id
+        where buyerId = #{userId};
+    </select>
+    <delete id="removeCard">
+        delete from card where id = #{id};
+    </delete>
+
+</mapper>

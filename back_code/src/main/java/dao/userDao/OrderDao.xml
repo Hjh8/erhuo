@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.userDao.OrderDao">
+    <select id="queryUser" resultType="entity.User">
+        select name, phone from user where id = #{buyerId};
+    </select>
+
+    <select id="getOrderShow" resultType="entity.OrderShow">
+        select transaction, phone
+        from user join goods
+        on goods.sellerId = user.id
+        where goods.id = #{goodsId}
+    </select>
+
+    <insert id="addOrder">
+        insert into orders(id,buyerId,sellerId,goodsId,nums,sta,time)
+        values
+        <foreach collection="array"  item="o" separator=",">
+            (#{o.id}, #{o.buyerId}, #{o.sellerId}, #{o.goodsId}, #{o.nums}, '发货中',#{o.time})
+         </foreach>
+    </insert>
+
+    <update id="updateGoodsCount">
+        update goods set count=count-#{nums} where id=#{goodsId};
+    </update>
+
+    <select id="queryOrder" resultType="entity.OrderList">
+        select orders.id, orders.sellerId, goods.id as goodsId, name, image, price, nums, orders.sta, goods.transaction, orders.time
+        from orders join goods
+        on orders.goodsId = goods.id
+        where buyerId = #{buyerId} and orders.sta != '交易关闭';
+    </select>
+
+    <update id="confirmOrder">
+        update orders set sta='交易成功' where id=#{orderId};
+    </update>
+
+    <update id="cancelOrder">
+        update orders set sta='交易关闭' where id=#{orderId};
+        update goods set count=count+#{nums} where id=#{goodsId};
+    </update>
+</mapper>

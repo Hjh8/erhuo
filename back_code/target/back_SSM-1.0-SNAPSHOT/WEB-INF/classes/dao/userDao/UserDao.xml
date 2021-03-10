@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dao.userDao.UserDao">
+    <insert id="registerUser">
+        insert into user
+        values(#{id},#{name},#{phone},#{realName},#{sno},#{drom},#{gender},#{createTime},#{avatar},#{pwd},#{sta});
+    </insert>
+
+    <select id="getNum" resultType="int">
+        select count(*) from user where phone = #{phone} and pwd = #{pwd};
+    </select>
+    <select id="loginUser" resultType="entity.User">
+        select id, name, phone, realName, sno, drom, gender, createTime, avatar, sta
+        from user
+        where phone = #{phone} and pwd = #{pwd};
+    </select>
+
+    <update id="retrievePwd">
+        update user set pwd=#{newPwd} where phone=#{phone};
+    </update>
+
+    <select id="queryRelease" resultType="entity.GoodsDetail">
+        select * from goods where sellerId = #{userId};
+    </select>
+    <delete id="removeRelease">
+        delete from goods where id = #{goodsId};
+    </delete>
+</mapper>
