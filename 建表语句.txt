@@ -1,0 +1,61 @@
+CREATE TABLE user (
+  `id` varchar(10) NOT NULL,
+  `name` varchar(14) NOT NULL,
+  `phone` varchar(11) NOT NULL,
+  `realName` varchar(8) NOT NULL,
+  `sno` varchar(12) NOT NULL,
+  `drom` varchar(8) NOT NULL,
+  `gender` char(6) NOT NULL,
+  `createTime` varchar(30) NOT NULL,
+  `avatar` varchar(255),
+  `pwd` varchar(16) NOT NULL,
+  `sta` int(1) DEFAULT 0 COMMENT '状态，1表示正常，0表示封号',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `UId`(`id`) USING BTREE
+);
+
+
+CREATE TABLE goods (
+  `id` varchar(12) PRIMARY KEY NOT NULL,
+  `sellerId` varchar(10)NOT NULL,
+  `name` varchar(15) NOT NULL,
+  `remark` varchar(255) NOT NULL,
+  `price` double(10, 2) NOT NULL,
+  `sort` varchar(8) NOT NULL,
+  `count` int(2) NOT NULL,
+  `sta` char(4) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `transaction` varchar(10) NOT NULL,
+  `time` datetime(0) NOT NULL,
+  UNIQUE INDEX `GID`(`id`) USING BTREE
+);
+
+CREATE TABLE orders (
+  `id` varchar(30) NOT NULL,
+  `buyerId` varchar(10) NOT NULL,
+  `sellerId` varchar(10) NOT NULL,
+  `goodsId` varchar(12) NOT NULL,
+  `nums` int(2) NOT NULL,
+  `sta` varchar(10) NOT NULL,
+  `time` varchar(30) NOT NULL',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE INDEX `OrderId`(`id`) USING BTREE,
+);
+
+CREATE TABLE card (
+  `id` varchar(12) NOT NULL,
+  `goodsId` varchar(12) NOT NULL,
+  `buyerId` varchar(10) NOT NULL,
+  `nums` int(2) NOT NULL,
+  `sellerName` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+);
+
+CREATE TABLE comment (
+  `id` varchar(12) PRIMARY KEY NOT NULL,
+  `buyerId` varchar(10) NOT NULL,
+  `goodsId` varchar(12) NOT NULL,
+  `content` varchar(255) NOT NULL,
+  `star` int(1) NOT NULL,
+  `time` datetime(0) NOT NULL DEFAULT
+);
