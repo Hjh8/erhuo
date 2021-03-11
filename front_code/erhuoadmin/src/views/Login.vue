@@ -54,8 +54,8 @@ export default {
     btnlogin(){
       this.$refs.loginref.validate(valid => {
         if(!valid) return;
-        if(this.loginmodel.phone=="123456" 
-            && this.loginmodel.password=="5642818"){
+        if(this.loginmodel.phone=="admin" 
+            && this.loginmodel.password=="admin"){
           this.$message.success("登录成功")
           this.$router.push('/home');
         }
